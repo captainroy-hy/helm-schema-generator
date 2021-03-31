@@ -1,0 +1,1543 @@
+{
+   "components": {
+      "schemas": {
+         "values": {
+            "properties": {
+               "antiAffinity": {
+                  "description": "Hard means that by default pods will only be scheduled if there are enough nodes for them\nand that they will never end up on the same node. Setting this to soft will do this \"best effort\"",
+                  "enum": [
+                     "hard"
+                  ],
+                  "type": "string"
+               },
+               "antiAffinityTopologyKey": {
+                  "description": "By default this will make sure two pods don't end up on the same node\nChanging this to a region would allow you to spread pods across regions",
+                  "enum": [
+                     "kubernetes.io/hostname"
+                  ],
+                  "type": "string"
+               },
+               "clusterHealthCheckParams": {
+                  "description": "https://www.elastic.co/guide/en/elasticsearch/reference/7.11/cluster-health.html#request-params wait_for_status",
+                  "enum": [
+                     "wait_for_status=green\u0026timeout=1s"
+                  ],
+                  "type": "string"
+               },
+               "clusterName": {
+                  "enum": [
+                     "elasticsearch"
+                  ],
+                  "type": "string"
+               },
+               "enableServiceLinks": {
+                  "description": "The environment variables injected by service links are not used, but can lead to slow Elasticsearch boot times when\nthere are many services in the current namespace.\nIf you experience slow pod startups you probably want to set this to `false`.",
+                  "enum": [
+                     true
+                  ],
+                  "type": "boolean"
+               },
+               "envFrom": {
+                  "description": "- name: MY_ENVIRONMENT_VAR\n   value: the_value_goes_here\nAllows you to load environment variables from kubernetes secret or config map",
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "esConfig": {
+                  "description": "Allows you to add any config files in /usr/share/elasticsearch/config/\nsuch as elasticsearch.yml and log4j2.properties",
+                  "type": "object"
+               },
+               "esJavaOpts": {
+                  "enum": [
+                     "-Xmx1g -Xms1g"
+                  ],
+                  "type": "string"
+               },
+               "esMajorVersion": {
+                  "enum": [
+                     ""
+                  ],
+                  "type": "string"
+               },
+               "extraContainers": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "extraEnvs": {
+                  "description": "elasticsearch.yml: |\n   key:\n     nestedkey: value\n log4j2.properties: |\n   key = value\nExtra environment variables to append to this nodeGroup\nThis will be appended to the current 'env:' key. You can use any of the kubernetes env\nsyntax here",
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "extraInitContainers": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "extraVolumeMounts": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "extraVolumes": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "fsGroup": {
+                  "description": "explicitNamespacesSelector:\n  matchLabels:\n    role: frontend\n  matchExpressions:\n    - {key: role, operator: In, values: [frontend]}\nadditionalRules:\n  - podSelector:\n      matchLabels:\n        role: frontend\n  - podSelector:\n      matchExpressions:\n        - key: role\n          operator: In\n          values:\n            - frontend\nDeprecated\nplease use the above podSecurityContext.fsGroup instead",
+                  "enum": [
+                     ""
+                  ],
+                  "type": "string"
+               },
+               "fullnameOverride": {
+                  "enum": [
+                     ""
+                  ],
+                  "type": "string"
+               },
+               "hostAliases": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "httpPort": {
+                  "enum": [
+                     9200
+                  ],
+                  "type": "integer"
+               },
+               "image": {
+                  "enum": [
+                     "docker.elastic.co/elasticsearch/elasticsearch"
+                  ],
+                  "type": "string"
+               },
+               "imagePullPolicy": {
+                  "enum": [
+                     "IfNotPresent"
+                  ],
+                  "type": "string"
+               },
+               "imagePullSecrets": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "imageTag": {
+                  "enum": [
+                     "7.11.1"
+                  ],
+                  "type": "string"
+               },
+               "ingress": {
+                  "description": "Enabling this will publically expose your Elasticsearch instance.\nOnly enable this if you have security enabled on your cluster",
+                  "properties": {
+                     "annotations": {
+                        "type": "object"
+                     },
+                     "enabled": {
+                        "enum": [
+                           false
+                        ],
+                        "type": "boolean"
+                     },
+                     "hosts": {
+                        "description": "kubernetes.io/ingress.class: nginx\nkubernetes.io/tls-acme: \"true\"",
+                        "items": {
+                           "enum": null,
+                           "properties": {
+                              "host": {
+                                 "enum": [
+                                    "chart-example.local"
+                                 ],
+                                 "type": "string"
+                              },
+                              "paths": {
+                                 "items": {
+                                    "enum": null,
+                                    "properties": {
+                                       "path": {
+                                          "enum": [
+                                             "/"
+                                          ],
+                                          "type": "string"
+                                       }
+                                    },
+                                    "required": [
+                                       "path"
+                                    ],
+                                    "type": "object"
+                                 },
+                                 "type": "array"
+                              }
+                           },
+                           "required": [
+                              "host",
+                              "paths"
+                           ],
+                           "type": "object"
+                        },
+                        "type": "array"
+                     },
+                     "tls": {
+                        "enum": [
+                           []
+                        ],
+                        "type": "array"
+                     }
+                  },
+                  "required": [
+                     "enabled",
+                     "annotations",
+                     "hosts",
+                     "tls"
+                  ],
+                  "type": "object"
+               },
+               "initResources": {
+                  "type": "object"
+               },
+               "keystore": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "labels": {
+                  "description": "iam.amazonaws.com/role: es-cluster\nadditionals labels",
+                  "type": "object"
+               },
+               "lifecycle": {
+                  "type": "object"
+               },
+               "masterService": {
+                  "description": "The service that non master groups will try to connect to when joining the cluster\nThis should be set to clusterName + \"-\" + nodeGroup for your master group",
+                  "enum": [
+                     ""
+                  ],
+                  "type": "string"
+               },
+               "masterTerminationFix": {
+                  "description": "https://github.com/elastic/helm-charts/issues/63",
+                  "enum": [
+                     false
+                  ],
+                  "type": "boolean"
+               },
+               "maxUnavailable": {
+                  "description": "This is the max unavailable setting for the pod disruption budget\nThe default value of 1 will make sure that kubernetes won't allow more than 1\nof your pods to be unavailable during maintenance",
+                  "enum": [
+                     1
+                  ],
+                  "type": "integer"
+               },
+               "minimumMasterNodes": {
+                  "enum": [
+                     2
+                  ],
+                  "type": "integer"
+               },
+               "nameOverride": {
+                  "enum": [
+                     ""
+                  ],
+                  "type": "string"
+               },
+               "networkHost": {
+                  "enum": [
+                     "0.0.0.0"
+                  ],
+                  "type": "string"
+               },
+               "networkPolicy": {
+                  "properties": {
+                     "http": {
+                        "properties": {
+                           "enabled": {
+                              "enum": [
+                                 false
+                              ],
+                              "type": "boolean"
+                           }
+                        },
+                        "required": [
+                           "enabled"
+                        ],
+                        "type": "object"
+                     },
+                     "transport": {
+                        "properties": {
+                           "enabled": {
+                              "description": "# Note that all Elasticsearch Pods can talks to themselves using transport port even if enabled.",
+                              "enum": [
+                                 false
+                              ],
+                              "type": "boolean"
+                           }
+                        },
+                        "required": [
+                           "enabled"
+                        ],
+                        "type": "object"
+                     }
+                  },
+                  "required": [
+                     "http",
+                     "transport"
+                  ],
+                  "type": "object"
+               },
+               "nodeAffinity": {
+                  "description": "This is the node affinity settings as defined in\nhttps://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature",
+                  "type": "object"
+               },
+               "nodeGroup": {
+                  "enum": [
+                     "master"
+                  ],
+                  "type": "string"
+               },
+               "nodeSelector": {
+                  "type": "object"
+               },
+               "persistence": {
+                  "properties": {
+                     "annotations": {
+                        "type": "object"
+                     },
+                     "enabled": {
+                        "enum": [
+                           true
+                        ],
+                        "type": "boolean"
+                     },
+                     "labels": {
+                        "properties": {
+                           "enabled": {
+                              "description": "Add default labels for the volumeClaimTemplate of the StatefulSet",
+                              "enum": [
+                                 false
+                              ],
+                              "type": "boolean"
+                           }
+                        },
+                        "required": [
+                           "enabled"
+                        ],
+                        "type": "object"
+                     }
+                  },
+                  "required": [
+                     "labels",
+                     "enabled",
+                     "annotations"
+                  ],
+                  "type": "object"
+               },
+               "podAnnotations": {
+                  "type": "object"
+               },
+               "podManagementPolicy": {
+                  "description": "The default is to deploy all pods serially. By setting this to parallel all pods are started at\nthe same time when bootstrapping the cluster",
+                  "enum": [
+                     "Parallel"
+                  ],
+                  "type": "string"
+               },
+               "podSecurityContext": {
+                  "properties": {
+                     "fsGroup": {
+                        "enum": [
+                           1000
+                        ],
+                        "type": "integer"
+                     },
+                     "runAsUser": {
+                        "enum": [
+                           1000
+                        ],
+                        "type": "integer"
+                     }
+                  },
+                  "required": [
+                     "fsGroup",
+                     "runAsUser"
+                  ],
+                  "type": "object"
+               },
+               "podSecurityPolicy": {
+                  "properties": {
+                     "create": {
+                        "enum": [
+                           false
+                        ],
+                        "type": "boolean"
+                     },
+                     "name": {
+                        "enum": [
+                           ""
+                        ],
+                        "type": "string"
+                     },
+                     "spec": {
+                        "properties": {
+                           "fsGroup": {
+                              "properties": {
+                                 "rule": {
+                                    "enum": [
+                                       "RunAsAny"
+                                    ],
+                                    "type": "string"
+                                 }
+                              },
+                              "required": [
+                                 "rule"
+                              ],
+                              "type": "object"
+                           },
+                           "privileged": {
+                              "enum": [
+                                 true
+                              ],
+                              "type": "boolean"
+                           },
+                           "runAsUser": {
+                              "properties": {
+                                 "rule": {
+                                    "enum": [
+                                       "RunAsAny"
+                                    ],
+                                    "type": "string"
+                                 }
+                              },
+                              "required": [
+                                 "rule"
+                              ],
+                              "type": "object"
+                           },
+                           "seLinux": {
+                              "properties": {
+                                 "rule": {
+                                    "enum": [
+                                       "RunAsAny"
+                                    ],
+                                    "type": "string"
+                                 }
+                              },
+                              "required": [
+                                 "rule"
+                              ],
+                              "type": "object"
+                           },
+                           "supplementalGroups": {
+                              "properties": {
+                                 "rule": {
+                                    "enum": [
+                                       "RunAsAny"
+                                    ],
+                                    "type": "string"
+                                 }
+                              },
+                              "required": [
+                                 "rule"
+                              ],
+                              "type": "object"
+                           },
+                           "volumes": {
+                              "enum": [
+                                 [
+                                    "secret",
+                                    "configMap",
+                                    "persistentVolumeClaim",
+                                    "emptyDir"
+                                 ]
+                              ],
+                              "items": {
+                                 "enum": null,
+                                 "type": "string"
+                              },
+                              "type": "array"
+                           }
+                        },
+                        "required": [
+                           "privileged",
+                           "fsGroup",
+                           "runAsUser",
+                           "seLinux",
+                           "supplementalGroups",
+                           "volumes"
+                        ],
+                        "type": "object"
+                     }
+                  },
+                  "required": [
+                     "name",
+                     "create",
+                     "spec"
+                  ],
+                  "type": "object"
+               },
+               "priorityClassName": {
+                  "description": "- name: do-something\n  image: busybox\n  command: ['do', 'something']\nThis is the PriorityClass settings as defined in\nhttps://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass",
+                  "enum": [
+                     ""
+                  ],
+                  "type": "string"
+               },
+               "protocol": {
+                  "enum": [
+                     "http"
+                  ],
+                  "type": "string"
+               },
+               "rbac": {
+                  "properties": {
+                     "create": {
+                        "enum": [
+                           false
+                        ],
+                        "type": "boolean"
+                     },
+                     "serviceAccountAnnotations": {
+                        "type": "object"
+                     },
+                     "serviceAccountName": {
+                        "enum": [
+                           ""
+                        ],
+                        "type": "string"
+                     }
+                  },
+                  "required": [
+                     "create",
+                     "serviceAccountAnnotations",
+                     "serviceAccountName"
+                  ],
+                  "type": "object"
+               },
+               "readinessProbe": {
+                  "properties": {
+                     "failureThreshold": {
+                        "enum": [
+                           3
+                        ],
+                        "type": "integer"
+                     },
+                     "initialDelaySeconds": {
+                        "enum": [
+                           10
+                        ],
+                        "type": "integer"
+                     },
+                     "periodSeconds": {
+                        "enum": [
+                           10
+                        ],
+                        "type": "integer"
+                     },
+                     "successThreshold": {
+                        "enum": [
+                           3
+                        ],
+                        "type": "integer"
+                     },
+                     "timeoutSeconds": {
+                        "enum": [
+                           5
+                        ],
+                        "type": "integer"
+                     }
+                  },
+                  "required": [
+                     "failureThreshold",
+                     "initialDelaySeconds",
+                     "periodSeconds",
+                     "successThreshold",
+                     "timeoutSeconds"
+                  ],
+                  "type": "object"
+               },
+               "replicas": {
+                  "enum": [
+                     3
+                  ],
+                  "type": "integer"
+               },
+               "resources": {
+                  "properties": {
+                     "limits": {
+                        "properties": {
+                           "cpu": {
+                              "enum": [
+                                 "1000m"
+                              ],
+                              "type": "string"
+                           },
+                           "memory": {
+                              "enum": [
+                                 "2Gi"
+                              ],
+                              "type": "string"
+                           }
+                        },
+                        "required": [
+                           "cpu",
+                           "memory"
+                        ],
+                        "type": "object"
+                     },
+                     "requests": {
+                        "properties": {
+                           "cpu": {
+                              "enum": [
+                                 "1000m"
+                              ],
+                              "type": "string"
+                           },
+                           "memory": {
+                              "enum": [
+                                 "2Gi"
+                              ],
+                              "type": "string"
+                           }
+                        },
+                        "required": [
+                           "cpu",
+                           "memory"
+                        ],
+                        "type": "object"
+                     }
+                  },
+                  "required": [
+                     "requests",
+                     "limits"
+                  ],
+                  "type": "object"
+               },
+               "roles": {
+                  "description": "Elasticsearch roles that will be applied to this nodeGroup\nThese will be set as environment variables. E.g. node.master=true",
+                  "properties": {
+                     "data": {
+                        "enum": [
+                           "true"
+                        ],
+                        "type": "string"
+                     },
+                     "ingest": {
+                        "enum": [
+                           "true"
+                        ],
+                        "type": "string"
+                     },
+                     "master": {
+                        "enum": [
+                           "true"
+                        ],
+                        "type": "string"
+                     },
+                     "ml": {
+                        "enum": [
+                           "true"
+                        ],
+                        "type": "string"
+                     },
+                     "remote_cluster_client": {
+                        "enum": [
+                           "true"
+                        ],
+                        "type": "string"
+                     }
+                  },
+                  "required": [
+                     "master",
+                     "ingest",
+                     "data",
+                     "remote_cluster_client",
+                     "ml"
+                  ],
+                  "type": "object"
+               },
+               "schedulerName": {
+                  "description": "# Use an alternate scheduler.\n# ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/\n#",
+                  "enum": [
+                     ""
+                  ],
+                  "type": "string"
+               },
+               "secretMounts": {
+                  "description": "- secretRef:\n    name: env-secret\n- configMapRef:\n    name: config-map\nA list of secrets and their paths to mount inside the pod\nThis is useful for mounting certificates for security and for mounting\nthe X-Pack license",
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "securityContext": {
+                  "properties": {
+                     "capabilities": {
+                        "properties": {
+                           "drop": {
+                              "enum": [
+                                 [
+                                    "ALL"
+                                 ]
+                              ],
+                              "items": {
+                                 "enum": null,
+                                 "type": "string"
+                              },
+                              "type": "array"
+                           }
+                        },
+                        "required": [
+                           "drop"
+                        ],
+                        "type": "object"
+                     },
+                     "runAsNonRoot": {
+                        "description": "readOnlyRootFilesystem: true",
+                        "enum": [
+                           true
+                        ],
+                        "type": "boolean"
+                     },
+                     "runAsUser": {
+                        "enum": [
+                           1000
+                        ],
+                        "type": "integer"
+                     }
+                  },
+                  "required": [
+                     "runAsUser",
+                     "capabilities",
+                     "runAsNonRoot"
+                  ],
+                  "type": "object"
+               },
+               "service": {
+                  "properties": {
+                     "annotations": {
+                        "type": "object"
+                     },
+                     "externalTrafficPolicy": {
+                        "enum": [
+                           ""
+                        ],
+                        "type": "string"
+                     },
+                     "httpPortName": {
+                        "enum": [
+                           "http"
+                        ],
+                        "type": "string"
+                     },
+                     "labels": {
+                        "type": "object"
+                     },
+                     "labelsHeadless": {
+                        "type": "object"
+                     },
+                     "loadBalancerIP": {
+                        "enum": [
+                           ""
+                        ],
+                        "type": "string"
+                     },
+                     "loadBalancerSourceRanges": {
+                        "enum": [
+                           []
+                        ],
+                        "type": "array"
+                     },
+                     "nodePort": {
+                        "enum": [
+                           ""
+                        ],
+                        "type": "string"
+                     },
+                     "transportPortName": {
+                        "enum": [
+                           "transport"
+                        ],
+                        "type": "string"
+                     },
+                     "type": {
+                        "enum": [
+                           "ClusterIP"
+                        ],
+                        "type": "string"
+                     }
+                  },
+                  "required": [
+                     "labels",
+                     "annotations",
+                     "labelsHeadless",
+                     "type",
+                     "nodePort",
+                     "httpPortName",
+                     "transportPortName",
+                     "loadBalancerIP",
+                     "loadBalancerSourceRanges",
+                     "externalTrafficPolicy"
+                  ],
+                  "type": "object"
+               },
+               "sidecarResources": {
+                  "type": "object"
+               },
+               "sysctlInitContainer": {
+                  "properties": {
+                     "enabled": {
+                        "enum": [
+                           true
+                        ],
+                        "type": "boolean"
+                     }
+                  },
+                  "required": [
+                     "enabled"
+                  ],
+                  "type": "object"
+               },
+               "sysctlVmMaxMapCount": {
+                  "enum": [
+                     262144
+                  ],
+                  "type": "integer"
+               },
+               "terminationGracePeriod": {
+                  "description": "How long to wait for elasticsearch to stop gracefully",
+                  "enum": [
+                     120
+                  ],
+                  "type": "integer"
+               },
+               "tolerations": {
+                  "enum": [
+                     []
+                  ],
+                  "type": "array"
+               },
+               "transportPort": {
+                  "enum": [
+                     9300
+                  ],
+                  "type": "integer"
+               },
+               "updateStrategy": {
+                  "enum": [
+                     "RollingUpdate"
+                  ],
+                  "type": "string"
+               },
+               "volumeClaimTemplate": {
+                  "properties": {
+                     "accessModes": {
+                        "enum": [
+                           [
+                              "ReadWriteOnce"
+                           ]
+                        ],
+                        "items": {
+                           "enum": null,
+                           "type": "string"
+                        },
+                        "type": "array"
+                     },
+                     "resources": {
+                        "properties": {
+                           "requests": {
+                              "properties": {
+                                 "storage": {
+                                    "enum": [
+                                       "30Gi"
+                                    ],
+                                    "type": "string"
+                                 }
+                              },
+                              "required": [
+                                 "storage"
+                              ],
+                              "type": "object"
+                           }
+                        },
+                        "required": [
+                           "requests"
+                        ],
+                        "type": "object"
+                     }
+                  },
+                  "required": [
+                     "resources",
+                     "accessModes"
+                  ],
+                  "type": "object"
+               }
+            },
+            "required": [
+               "clusterName",
+               "nodeGroup",
+               "masterService",
+               "roles",
+               "replicas",
+               "minimumMasterNodes",
+               "esMajorVersion",
+               "esConfig",
+               "extraEnvs",
+               "envFrom",
+               "secretMounts",
+               "hostAliases",
+               "image",
+               "imageTag",
+               "imagePullPolicy",
+               "podAnnotations",
+               "labels",
+               "esJavaOpts",
+               "resources",
+               "initResources",
+               "sidecarResources",
+               "networkHost",
+               "volumeClaimTemplate",
+               "rbac",
+               "podSecurityPolicy",
+               "fsGroup",
+               "persistence",
+               "extraVolumes",
+               "extraVolumeMounts",
+               "extraContainers",
+               "extraInitContainers",
+               "priorityClassName",
+               "antiAffinityTopologyKey",
+               "antiAffinity",
+               "nodeAffinity",
+               "podManagementPolicy",
+               "enableServiceLinks",
+               "protocol",
+               "httpPort",
+               "transportPort",
+               "service",
+               "updateStrategy",
+               "maxUnavailable",
+               "podSecurityContext",
+               "securityContext",
+               "terminationGracePeriod",
+               "sysctlVmMaxMapCount",
+               "readinessProbe",
+               "clusterHealthCheckParams",
+               "schedulerName",
+               "imagePullSecrets",
+               "nodeSelector",
+               "tolerations",
+               "ingress",
+               "nameOverride",
+               "fullnameOverride",
+               "masterTerminationFix",
+               "lifecycle",
+               "sysctlInitContainer",
+               "keystore",
+               "networkPolicy"
+            ],
+            "type": "object"
+         }
+      }
+   },
+   "info": {
+      "title": "Generated by cue.",
+      "version": "no version"
+   },
+   "openapi": "3.0.0",
+   "paths": {}
+}{
+   "properties": {
+      "antiAffinity": {
+         "default": "hard",
+         "description": "Hard means that by default pods will only be scheduled if there are enough nodes for them\nand that they will never end up on the same node. Setting this to soft will do this \"best effort\"",
+         "type": "string"
+      },
+      "antiAffinityTopologyKey": {
+         "default": "kubernetes.io/hostname",
+         "description": "By default this will make sure two pods don't end up on the same node\nChanging this to a region would allow you to spread pods across regions",
+         "type": "string"
+      },
+      "clusterHealthCheckParams": {
+         "default": "wait_for_status=green\u0026timeout=1s",
+         "description": "https://www.elastic.co/guide/en/elasticsearch/reference/7.11/cluster-health.html#request-params wait_for_status",
+         "type": "string"
+      },
+      "clusterName": {
+         "default": "elasticsearch",
+         "type": "string"
+      },
+      "enableServiceLinks": {
+         "default": true,
+         "description": "The environment variables injected by service links are not used, but can lead to slow Elasticsearch boot times when\nthere are many services in the current namespace.\nIf you experience slow pod startups you probably want to set this to `false`.",
+         "type": "boolean"
+      },
+      "envFrom": {
+         "default": [],
+         "description": "- name: MY_ENVIRONMENT_VAR\n   value: the_value_goes_here\nAllows you to load environment variables from kubernetes secret or config map",
+         "type": "array"
+      },
+      "esConfig": {
+         "description": "Allows you to add any config files in /usr/share/elasticsearch/config/\nsuch as elasticsearch.yml and log4j2.properties",
+         "type": "object"
+      },
+      "esJavaOpts": {
+         "default": "-Xmx1g -Xms1g",
+         "type": "string"
+      },
+      "esMajorVersion": {
+         "default": "",
+         "type": "string"
+      },
+      "extraContainers": {
+         "default": [],
+         "type": "array"
+      },
+      "extraEnvs": {
+         "default": [],
+         "description": "elasticsearch.yml: |\n   key:\n     nestedkey: value\n log4j2.properties: |\n   key = value\nExtra environment variables to append to this nodeGroup\nThis will be appended to the current 'env:' key. You can use any of the kubernetes env\nsyntax here",
+         "type": "array"
+      },
+      "extraInitContainers": {
+         "default": [],
+         "type": "array"
+      },
+      "extraVolumeMounts": {
+         "default": [],
+         "type": "array"
+      },
+      "extraVolumes": {
+         "default": [],
+         "type": "array"
+      },
+      "fsGroup": {
+         "default": "",
+         "description": "explicitNamespacesSelector:\n  matchLabels:\n    role: frontend\n  matchExpressions:\n    - {key: role, operator: In, values: [frontend]}\nadditionalRules:\n  - podSelector:\n      matchLabels:\n        role: frontend\n  - podSelector:\n      matchExpressions:\n        - key: role\n          operator: In\n          values:\n            - frontend\nDeprecated\nplease use the above podSecurityContext.fsGroup instead",
+         "type": "string"
+      },
+      "fullnameOverride": {
+         "default": "",
+         "type": "string"
+      },
+      "hostAliases": {
+         "default": [],
+         "type": "array"
+      },
+      "httpPort": {
+         "default": 9200,
+         "type": "integer"
+      },
+      "image": {
+         "default": "docker.elastic.co/elasticsearch/elasticsearch",
+         "type": "string"
+      },
+      "imagePullPolicy": {
+         "default": "IfNotPresent",
+         "type": "string"
+      },
+      "imagePullSecrets": {
+         "default": [],
+         "type": "array"
+      },
+      "imageTag": {
+         "default": "7.11.1",
+         "type": "string"
+      },
+      "ingress": {
+         "description": "Enabling this will publically expose your Elasticsearch instance.\nOnly enable this if you have security enabled on your cluster",
+         "properties": {
+            "annotations": {
+               "type": "object"
+            },
+            "enabled": {
+               "default": false,
+               "type": "boolean"
+            },
+            "hosts": {
+               "description": "kubernetes.io/ingress.class: nginx\nkubernetes.io/tls-acme: \"true\"",
+               "items": {
+                  "properties": {
+                     "host": {
+                        "default": "chart-example.local",
+                        "type": "string"
+                     },
+                     "paths": {
+                        "items": {
+                           "properties": {
+                              "path": {
+                                 "default": "/",
+                                 "type": "string"
+                              }
+                           },
+                           "type": "object"
+                        },
+                        "type": "array"
+                     }
+                  },
+                  "type": "object"
+               },
+               "type": "array"
+            },
+            "tls": {
+               "default": [],
+               "type": "array"
+            }
+         },
+         "type": "object"
+      },
+      "initResources": {
+         "type": "object"
+      },
+      "keystore": {
+         "default": [],
+         "type": "array"
+      },
+      "labels": {
+         "description": "iam.amazonaws.com/role: es-cluster\nadditionals labels",
+         "type": "object"
+      },
+      "lifecycle": {
+         "type": "object"
+      },
+      "masterService": {
+         "default": "",
+         "description": "The service that non master groups will try to connect to when joining the cluster\nThis should be set to clusterName + \"-\" + nodeGroup for your master group",
+         "type": "string"
+      },
+      "masterTerminationFix": {
+         "default": false,
+         "description": "https://github.com/elastic/helm-charts/issues/63",
+         "type": "boolean"
+      },
+      "maxUnavailable": {
+         "default": 1,
+         "description": "This is the max unavailable setting for the pod disruption budget\nThe default value of 1 will make sure that kubernetes won't allow more than 1\nof your pods to be unavailable during maintenance",
+         "type": "integer"
+      },
+      "minimumMasterNodes": {
+         "default": 2,
+         "type": "integer"
+      },
+      "nameOverride": {
+         "default": "",
+         "type": "string"
+      },
+      "networkHost": {
+         "default": "0.0.0.0",
+         "type": "string"
+      },
+      "networkPolicy": {
+         "properties": {
+            "http": {
+               "properties": {
+                  "enabled": {
+                     "default": false,
+                     "type": "boolean"
+                  }
+               },
+               "type": "object"
+            },
+            "transport": {
+               "properties": {
+                  "enabled": {
+                     "default": false,
+                     "description": "# Note that all Elasticsearch Pods can talks to themselves using transport port even if enabled.",
+                     "type": "boolean"
+                  }
+               },
+               "type": "object"
+            }
+         },
+         "type": "object"
+      },
+      "nodeAffinity": {
+         "description": "This is the node affinity settings as defined in\nhttps://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature",
+         "type": "object"
+      },
+      "nodeGroup": {
+         "default": "master",
+         "type": "string"
+      },
+      "nodeSelector": {
+         "type": "object"
+      },
+      "persistence": {
+         "properties": {
+            "annotations": {
+               "type": "object"
+            },
+            "enabled": {
+               "default": true,
+               "type": "boolean"
+            },
+            "labels": {
+               "properties": {
+                  "enabled": {
+                     "default": false,
+                     "description": "Add default labels for the volumeClaimTemplate of the StatefulSet",
+                     "type": "boolean"
+                  }
+               },
+               "type": "object"
+            }
+         },
+         "type": "object"
+      },
+      "podAnnotations": {
+         "type": "object"
+      },
+      "podManagementPolicy": {
+         "default": "Parallel",
+         "description": "The default is to deploy all pods serially. By setting this to parallel all pods are started at\nthe same time when bootstrapping the cluster",
+         "type": "string"
+      },
+      "podSecurityContext": {
+         "properties": {
+            "fsGroup": {
+               "default": 1000,
+               "type": "integer"
+            },
+            "runAsUser": {
+               "default": 1000,
+               "type": "integer"
+            }
+         },
+         "type": "object"
+      },
+      "podSecurityPolicy": {
+         "properties": {
+            "create": {
+               "default": false,
+               "type": "boolean"
+            },
+            "name": {
+               "default": "",
+               "type": "string"
+            },
+            "spec": {
+               "properties": {
+                  "fsGroup": {
+                     "properties": {
+                        "rule": {
+                           "default": "RunAsAny",
+                           "type": "string"
+                        }
+                     },
+                     "type": "object"
+                  },
+                  "privileged": {
+                     "default": true,
+                     "type": "boolean"
+                  },
+                  "runAsUser": {
+                     "properties": {
+                        "rule": {
+                           "default": "RunAsAny",
+                           "type": "string"
+                        }
+                     },
+                     "type": "object"
+                  },
+                  "seLinux": {
+                     "properties": {
+                        "rule": {
+                           "default": "RunAsAny",
+                           "type": "string"
+                        }
+                     },
+                     "type": "object"
+                  },
+                  "supplementalGroups": {
+                     "properties": {
+                        "rule": {
+                           "default": "RunAsAny",
+                           "type": "string"
+                        }
+                     },
+                     "type": "object"
+                  },
+                  "volumes": {
+                     "default": [
+                        "secret",
+                        "configMap",
+                        "persistentVolumeClaim",
+                        "emptyDir"
+                     ],
+                     "items": {
+                        "type": "string"
+                     },
+                     "type": "array"
+                  }
+               },
+               "type": "object"
+            }
+         },
+         "type": "object"
+      },
+      "priorityClassName": {
+         "default": "",
+         "description": "- name: do-something\n  image: busybox\n  command: ['do', 'something']\nThis is the PriorityClass settings as defined in\nhttps://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass",
+         "type": "string"
+      },
+      "protocol": {
+         "default": "http",
+         "type": "string"
+      },
+      "rbac": {
+         "properties": {
+            "create": {
+               "default": false,
+               "type": "boolean"
+            },
+            "serviceAccountAnnotations": {
+               "type": "object"
+            },
+            "serviceAccountName": {
+               "default": "",
+               "type": "string"
+            }
+         },
+         "type": "object"
+      },
+      "readinessProbe": {
+         "properties": {
+            "failureThreshold": {
+               "default": 3,
+               "type": "integer"
+            },
+            "initialDelaySeconds": {
+               "default": 10,
+               "type": "integer"
+            },
+            "periodSeconds": {
+               "default": 10,
+               "type": "integer"
+            },
+            "successThreshold": {
+               "default": 3,
+               "type": "integer"
+            },
+            "timeoutSeconds": {
+               "default": 5,
+               "type": "integer"
+            }
+         },
+         "type": "object"
+      },
+      "replicas": {
+         "default": 3,
+         "type": "integer"
+      },
+      "resources": {
+         "properties": {
+            "limits": {
+               "properties": {
+                  "cpu": {
+                     "default": "1000m",
+                     "type": "string"
+                  },
+                  "memory": {
+                     "default": "2Gi",
+                     "type": "string"
+                  }
+               },
+               "type": "object"
+            },
+            "requests": {
+               "properties": {
+                  "cpu": {
+                     "default": "1000m",
+                     "type": "string"
+                  },
+                  "memory": {
+                     "default": "2Gi",
+                     "type": "string"
+                  }
+               },
+               "type": "object"
+            }
+         },
+         "type": "object"
+      },
+      "roles": {
+         "description": "Elasticsearch roles that will be applied to this nodeGroup\nThese will be set as environment variables. E.g. node.master=true",
+         "properties": {
+            "data": {
+               "default": "true",
+               "type": "string"
+            },
+            "ingest": {
+               "default": "true",
+               "type": "string"
+            },
+            "master": {
+               "default": "true",
+               "type": "string"
+            },
+            "ml": {
+               "default": "true",
+               "type": "string"
+            },
+            "remote_cluster_client": {
+               "default": "true",
+               "type": "string"
+            }
+         },
+         "type": "object"
+      },
+      "schedulerName": {
+         "default": "",
+         "description": "# Use an alternate scheduler.\n# ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/\n#",
+         "type": "string"
+      },
+      "secretMounts": {
+         "default": [],
+         "description": "- secretRef:\n    name: env-secret\n- configMapRef:\n    name: config-map\nA list of secrets and their paths to mount inside the pod\nThis is useful for mounting certificates for security and for mounting\nthe X-Pack license",
+         "type": "array"
+      },
+      "securityContext": {
+         "properties": {
+            "capabilities": {
+               "properties": {
+                  "drop": {
+                     "default": [
+                        "ALL"
+                     ],
+                     "items": {
+                        "type": "string"
+                     },
+                     "type": "array"
+                  }
+               },
+               "type": "object"
+            },
+            "runAsNonRoot": {
+               "default": true,
+               "description": "readOnlyRootFilesystem: true",
+               "type": "boolean"
+            },
+            "runAsUser": {
+               "default": 1000,
+               "type": "integer"
+            }
+         },
+         "type": "object"
+      },
+      "service": {
+         "properties": {
+            "annotations": {
+               "type": "object"
+            },
+            "externalTrafficPolicy": {
+               "default": "",
+               "type": "string"
+            },
+            "httpPortName": {
+               "default": "http",
+               "type": "string"
+            },
+            "labels": {
+               "type": "object"
+            },
+            "labelsHeadless": {
+               "type": "object"
+            },
+            "loadBalancerIP": {
+               "default": "",
+               "type": "string"
+            },
+            "loadBalancerSourceRanges": {
+               "default": [],
+               "type": "array"
+            },
+            "nodePort": {
+               "default": "",
+               "type": "string"
+            },
+            "transportPortName": {
+               "default": "transport",
+               "type": "string"
+            },
+            "type": {
+               "default": "ClusterIP",
+               "type": "string"
+            }
+         },
+         "type": "object"
+      },
+      "sidecarResources": {
+         "type": "object"
+      },
+      "sysctlInitContainer": {
+         "properties": {
+            "enabled": {
+               "default": true,
+               "type": "boolean"
+            }
+         },
+         "type": "object"
+      },
+      "sysctlVmMaxMapCount": {
+         "default": 262144,
+         "type": "integer"
+      },
+      "terminationGracePeriod": {
+         "default": 120,
+         "description": "How long to wait for elasticsearch to stop gracefully",
+         "type": "integer"
+      },
+      "tolerations": {
+         "default": [],
+         "type": "array"
+      },
+      "transportPort": {
+         "default": 9300,
+         "type": "integer"
+      },
+      "updateStrategy": {
+         "default": "RollingUpdate",
+         "type": "string"
+      },
+      "volumeClaimTemplate": {
+         "properties": {
+            "accessModes": {
+               "default": [
+                  "ReadWriteOnce"
+               ],
+               "items": {
+                  "type": "string"
+               },
+               "type": "array"
+            },
+            "resources": {
+               "properties": {
+                  "requests": {
+                     "properties": {
+                        "storage": {
+                           "default": "30Gi",
+                           "type": "string"
+                        }
+                     },
+                     "type": "object"
+                  }
+               },
+               "type": "object"
+            }
+         },
+         "type": "object"
+      }
+   },
+   "type": "object"
+}

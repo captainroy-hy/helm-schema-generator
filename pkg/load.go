@@ -19,6 +19,7 @@ var (
 	}
 )
 
+// loadChartFiles fetches Helm chart values file by URL
 func loadChartFiles(ctx context.Context, repoURL, chart, version string) (*loader.BufferedFile, error) {
 	url, err := repo.FindChartInRepoURL(repoURL, chart, version, "", "", "", getters)
 	if err != nil {

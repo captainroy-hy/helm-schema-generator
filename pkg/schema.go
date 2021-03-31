@@ -66,7 +66,8 @@ func GenerateSchemaFromValues(values []byte) ([]byte, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "cannot marshall Values schema")
 	}
-	return b, nil
+	_ = json.Indent(out, b, "", "   ")
+	return out.Bytes(), nil
 }
 
 // cue openapi encoder converts default in Chart Values as enum in schema
