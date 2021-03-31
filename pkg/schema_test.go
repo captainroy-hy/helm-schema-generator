@@ -18,8 +18,10 @@ func TestGetChartValuesJSONSchema(t *testing.T) {
 		"http://oam.dev/catalog": {
 			"podinfo": {"5.1.4"},
 		},
-		"https://charts.helm.sh/stable": {
-			"consul": {"3.9.6"},
+		"https://helm.releases.hashicorp.com": {
+			"consul":    {"0.31.1"},
+			"terraform": {"1.0.0"},
+			"vault":     {"0.10.0"},
 		},
 	}
 	for repo, charts := range tests {
